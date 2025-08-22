@@ -117,11 +117,12 @@ void Inventory::InitializeInventory(std::string line){
 	// Sprit the line appart using key
 	string key = line.substr(0, pos);
 
-	// Set the qty
-	int qty = strtol(line.substr(pos, line.size()));
-
 	// Remove whitespace
-	key = RemoveWhiteSpace(key);
+	RemoveWhiteSpace(key);
+
+	// Set the qty
+	string str_int = line.substr(pos, line.size());
+	int qty = stoi(str_int);
 
 	// Save the key
 	this -> product[key] = qty;
@@ -158,7 +159,6 @@ int Inventory::InputFile(std::string inventory_file){
    	string line;
    	while (getline(inFS, line)) {
         // Process each line as needed
-    	cout << "checking file: " << line << endl;
     	UpdateInventory(line);
     }
 	inFS.close();
@@ -220,11 +220,39 @@ int Inventory::GetInput(){
 
 void Inventory::PrintFrequency(){
 	// Printing the histogram
+
+	// Build the iterator
 	map<string,int>::iterator it; 
+
+	// Get the max value size of the inventory item
+	int max_size = 0;
 	for (it=this->product.begin();it!=this->product.end();++it) {
+		// get the large size and assign
+		int size = it-> first.size();
+		if (size > max_size){
+			max_size = size;
+		}
+	}
+
+	// Pad max size by one for easier reading
+	max_size = 1 + max_size;
+
+	// Set the print per line and print
+	for (it=this->product.begin();it!=this->product.end();++it) {
+		// Setup iterator for the total string size.
 		string capital = it->first;
 		capital[0] = toupper(capital[0]);
 	    cout << capital;
+
+	    // Figure the padding size
+	    int pad_me = 0;
+	    pad_me = max_size - capital.size();
+	    for (int i=0; i< pad_me; i++){
+	    	cout << " ";
+	    }
+	    // Break up the histogram for easier reading
+	    cout << "| ";
+
 	    for(int i = 0; i< it->second; i++){
 	    	cout << "%";
 	    }
