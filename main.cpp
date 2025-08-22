@@ -151,6 +151,7 @@ int Inventory::InputFile(std::string inventory_file){
 	    	InitializeInventory(line);
 	    }
 	}
+	saveFS.close();
 	ifstream inFS;
 	inFS.open(inventory_file);
 	if (!inFS.is_open()) {
@@ -161,6 +162,7 @@ int Inventory::InputFile(std::string inventory_file){
         // Process each line as needed
     	UpdateInventory(line);
     }
+    SaveFile();
 	inFS.close();
 	return 0;
 
