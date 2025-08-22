@@ -165,7 +165,7 @@ int Inventory::InputFile(std::string inventory_file){
     SaveFile();
 	inFS.close();
 	return 0;
-
+ 
 }
 
 void Inventory::RemoveWhiteSpace(std::string& cleanMe){
@@ -264,10 +264,17 @@ void Inventory::PrintFrequency(){
 
 int GroceryHandle(){
 	// Grovery store handler
+	// Change this fore a new store name in the .dat file
 	string store_name = "Corner Grocer";
+
+	// Initalize the inventory for the grocer
 	Inventory* grocer;
 	grocer = new Inventory(store_name);
+
+	// Fill the inventory
 	grocer -> InputFile("CS210_Project_Three_Input_File.txt");
+
+	// Setup and ask for the menu
 	int input = 0;
 	while(input != 4){
 		grocer -> PrintMenu(1);
@@ -288,7 +295,6 @@ int GroceryHandle(){
 				cout << "Invalid input" << endl;
 			}
 	}
-	grocer -> PrintInventory();
 	return 0;
 }
 
