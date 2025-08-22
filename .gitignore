@@ -39,3 +39,10 @@
 
 # debug information files
 *.dwo
+
+
+# do not record the dat file, this is our db
+*.dat
+
+# drop the compiled file it will need recompile
+test
